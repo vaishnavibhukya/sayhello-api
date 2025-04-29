@@ -3,16 +3,17 @@ name: Deploy Backend API
 on:
   push:
     branches:
-      - master   # Adjust this if you use a different branch (e.g., main)
+      - master   # Use 'main' if your branch is named 'main'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up SSH keys (if needed for VM access)
+      - name: Set up SSH keys
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -20,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install nodejs npm
+          sudo apt-get install -y nodejs npm
           npm install
 
       - name: Deploy to VM
